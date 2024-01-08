@@ -1,4 +1,9 @@
 0108
+코드가 깔끔하게 잘 정돈되어 있으며,
+서로 이야기를 해보면서 코드에 대해 많이 이해하고 계시고 
+문제점을 잘 파악하시고, 제가 해결못했던 부분을 완벽히 해결하셨습니다 ! ( datetime, 함수 방식 등 )
+
+많이 배울 수 있는 시간이었습니다 :)
 
 # AIFFEL Data Scientist Campus Code Peer Review Templete
 
