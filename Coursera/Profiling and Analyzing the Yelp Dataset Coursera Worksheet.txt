@@ -1,0 +1,595 @@
+Data Scientist Role Play: Profiling and Analyzing the Yelp Dataset Coursera Worksheet
+
+This is a 2-part assignment. In the first part, you are asked a series of questions that will help you profile and understand the data just like a data scientist would. For this first part of the assignment, you will be assessed both on the correctness of your findings, as well as the code you used to arrive at your answer. You will be graded on how easy your code is to read, so remember to use proper formatting and comments where necessary.
+
+In the second part of the assignment, you are asked to come up with your own inferences and analysis of the data for a particular research question you want to answer. You will be required to prepare the dataset for the analysis you choose to do. As with the first part, you will be graded, in part, on how easy your code is to read, so use proper formatting and comments to illustrate and communicate your intent as required.
+
+For both parts of this assignment, use this "worksheet." It provides all the questions you are being asked, and your job will be to transfer your answers and SQL coding where indicated into this worksheet so that your peers can review your work. You should be able to use any Text Editor (Windows Notepad, Apple TextEdit, Notepad ++, Sublime Text, etc.) to copy and paste your answers. If you are going to use Word or some other page layout application, just be careful to make sure your answers and code are lined appropriately.
+In this case, you may want to save as a PDF to ensure your formatting remains intact for you reviewer.
+
+
+
+Part 1: Yelp Dataset Profiling and Understanding
+
+1. Profile the data by finding the total number of records for each of the tables below:
+
+i. Attribute table = 10,000
+ii. Business table = 10,000
+iii. Category table = 10,000
+iv. Checkin table = 10,000
+v. elite_years table = 10,000
+vi. friend table = 10,000
+vii. hours table = 10,000
+viii. photo table = 10,000
+ix. review table = 10,000 
+x. tip table = 10,000
+xi. user table =10,000
+
+
+Queries;
+
+SELECT COUNT(*) as record_count FROM business;
+SELECT COUNT(*) as record_count FROM hours;
+SELECT COUNT(*) as record_count FROM category;
+SELECT COUNT(*) as record_count FROM attribute;
+SELECT COUNT(*) as record_count FROM review;
+SELECT COUNT(*) as record_count FROM user;
+SELECT COUNT(*) as record_count FROM friend;
+SELECT COUNT(*) as record_count FROM elite_years;
+SELECT COUNT(*) as record_count FROM checkin;
+SELECT COUNT(*) as record_count FROM photo;
+SELECT COUNT(*) as record_count FROM tip;
+
+
+
+2. Find the total number of distinct records for the primary keys in each of the tables listed below:
+
+i. Business = 10000
+ii. Hours = 1562
+iii. Category = 2643
+iv. Attribute = 1115
+v. Review = 10000
+vi. Checkin = 493
+vii. Photo = 10000 
+viii. Tip = 537 (by user_id)
+ix. User = 10000
+x. Friend = 11
+xi. Elite_years = 2780
+
+Note: Primary Keys are denoted in the ER-Diagram with a yellow key icon.	
+
+Queries;
+
+SELECT COUNT(DISTINCT id) AS distinct_count FROM business;
+SELECT COUNT(DISTINCT business_id) AS distinct_count FROM hours;
+SELECT COUNT(DISTINCT business_id) AS distinct_count FROM category;
+SELECT COUNT(DISTINCT business_id) AS distinct_count FROM attribute;
+SELECT COUNT(DISTINCT id) AS distinct_count FROM attribute;
+SELECT COUNT(DISTINCT business_id) AS distinct_count FROM checkin;
+SELECT COUNT(DISTINCT id) AS distinct_count FROM photo;
+SELECT COUNT(DISTINCT user_id) AS distinct_count FROM tip;
+SELECT COUNT(DISTINCT id) AS distinct_count FROM user;
+SELECT COUNT(DISTINCT user_id) AS distinct_count FROM friend;
+SELECT COUNT(DISTINCT user_id) AS distinct_count FROM elite_years;
+
+
+
+3. Are there any columns with null values in the Users table? Indicate "yes," or "no."
+
+Answer: NO
+
+
+SQL code used to arrive at answer:
+
+SELECT
+COUNT(*) as total_rows,
+COUNT(id) as id_not_null,
+COUNT(name) as name_not_null,
+COUNT(review_count) as review_count_not_null,
+COUNT(yelping_since) as yelping_since_not_null,
+COUNT(useful) as useful_not_null,
+COUNT(funny) as funny_not_null,
+COUNT(cool) as cool_not_null,
+COUNT(fans) as fans_not_null,
+COUNT(average_stars) as average_stars_not_null,
+COUNT(compliment_hot) as compliment_hot_not_null,
+COUNT(compliment_more) as compliment_more_not_null,
+COUNT(compliment_profile) as compliment_profile_not_null,
+COUNT(compliment_cute) as compliment_cute_not_null,
+COUNT(compliment_list) as compliment_list_not_null,
+COUNT(compliment_note) as compliment_note_not_null,
+COUNT(compliment_plain) as compliment_plain_not_null,
+COUNT(compliment_cool) as compliment_cool_not_null,
+COUNT(compliment_funny) as compliment_funny_not_null,
+COUNT(compliment_writer) as compliment_writer_not_null,
+COUNT(compliment_photos) as compliment_photos_not_null
+FROM user;
+
+
+
+4. For each table and column listed below, display the smallest (minimum), largest (maximum), and average (mean) value for the following fields:
+
+i. Table: Review, Column: Stars
+    min: 1		max: 5		avg: 3.7082
+
+ii. Table: Business, Column: Stars
+    min: 1		max: 5		avg: 3.6549
+
+iii. Table: Tip, Column: Likes
+    min: 0		max: 2		avg: 0.0144
+
+iv. Table: Checkin, Column: Count
+    min: 1		max: 53		avg: 1.9414
+
+v. Table: User, Column: Review_count
+    min: 0		max: 2,000	avg: 24.2995
+
+
+
+5. List the cities with the most reviews in descending order:
+
+SQL code used to arrive at answer:
+
+SELECT city, SUM(review_count) AS review_count
+FROM business
+GROUP BY city
+ORDER BY review_count DESC;
+
+Copy and Paste the Result Below:
+
++-----------------+--------------+
+| city            | review_count |
++-----------------+--------------+
+| Las Vegas       |        82854 |
+| Phoenix         |        34503 |
+| Toronto         |        24113 |
+| Scottsdale      |        20614 |
+| Charlotte       |        12523 |
+| Henderson       |        10871 |
+| Tempe           |        10504 |
+| Pittsburgh      |         9798 |
+| Montréal        |         9448 |
+| Chandler        |         8112 |
+| Mesa            |         6875 |
+| Gilbert         |         6380 |
+| Cleveland       |         5593 |
+| Madison         |         5265 |
+| Glendale        |         4406 |
+| Mississauga     |         3814 |
+| Edinburgh       |         2792 |
+| Peoria          |         2624 |
+| North Las Vegas |         2438 |
+| Markham         |         2352 |
+| Champaign       |         2029 |
+| Stuttgart       |         1849 |
+| Surprise        |         1520 |
+| Lakewood        |         1465 |
+| Goodyear        |         1155 |
++-----------------+--------------+
+(Output limit exceeded, 25 of 362 total rows shown)
+
+
+
+6. Find the distribution of star ratings to the business in the following cities:
+
+i. Avon 
+
+SQL code used to arrive at answer:
+
+SELECT city, stars, COUNT(stars) AS star_count
+FROM business
+WHERE city = 'Avon'
+GROUP BY stars
+ORDER BY stars DESC;
+
+Copy and Paste the Resulting Table Below (2 columns – star rating and count):
+
++------+-------+------------+
+| city | stars | star_count |
++------+-------+------------+
+| Avon |   5.0 |          1 |
+| Avon |   4.5 |          1 |
+| Avon |   4.0 |          2 |
+| Avon |   3.5 |          3 |
+| Avon |   2.5 |          2 |
+| Avon |   1.5 |          1 |
++------+-------+------------+
+
+ii. Beachwood 
+
+SQL code used to arrive at answer:
+
+SELECT city, stars, COUNT(stars) AS star_count
+FROM business
+WHERE city = 'Beachwood'
+GROUP BY stars
+ORDER BY stars DESC;
+
+Copy and Paste the Resulting Table Below (2 columns – star rating and count):
+
++-----------+-------+------------+
+| city      | stars | star_count |
++-----------+-------+------------+
+| Beachwood |   5.0 |          5 |
+| Beachwood |   4.5 |          2 |
+| Beachwood |   4.0 |          1 |
+| Beachwood |   3.5 |          2 |
+| Beachwood |   3.0 |          2 |
+| Beachwood |   2.5 |          1 |
+| Beachwood |   2.0 |          1 |
++-----------+-------+------------+
+
+
+
+7. Find the top 3 users based on their total number of reviews:
+
+SQL code used to arrive at answer:
+
+SELECT id, name, SUM(review_count) AS total_review
+FROM business
+GROUP BY id
+ORDER BY total_review DESC
+LIMIT 3
+
+Copy and Paste the Result Below:
++------------------------+------------------+--------------+
+| id                     | name             | total_review |
++------------------------+------------------+--------------+
+| 2weQS-RnoOBhb1KsHKyoSQ | The Buffet       |         3873 |
+| 0W4lkclzZThpx3V65bVgig | Schwartz's       |         1757 |
+| 0FUtlsQrJI7LhqDPxLumEw | Joe's Farm Grill |         1549 |
++------------------------+------------------+--------------+
+
+
+
+8. Does posing more reviews correlate with more fans?
+
+Please explain your findings and interpretation of the results: 
+
+There is correlation between reviews number and fans. 
+Through the four(4) binning review number group, more reivew number, more fan number has been observed:
++--------------+--------------+
+| review_group | avg_num_fans |
++--------------+--------------+
+| 1500-2000    |        151.5 |
+| 1000-1500    |        122.3 |
+|  500-1000    |         76.4 |
+|     0-500    |          1.1 |
++--------------+--------------+
+
+SELECT 
+    CASE
+        WHEN review_count BETWEEN 0 AND 500 THEN              '    0-500'
+        WHEN review_count > 500 AND review_count <= 1000 THEN ' 500-1000'
+        WHEN review_count > 1000 AND review_count <=1500 THEN '1000-1500'
+        WHEN review_count > 1500 AND review_count <=2000 THEN '1500-2000'
+    END AS 'review_group',
+    ROUND(AVG(fans), 1) AS 'avg_num_fans'
+FROM user
+GROUP BY review_group
+ORDER BY review_group DESC
+
+
+	
+09. Are there more reviews with the word "love" or with the word "hate" in them?
+
+	Answer: More reviews with love
+		Love 1,780
+		Hate 232
+	
+	SQL code used to arrive at answer:
+
+-- For "love" count:
+SELECT COUNT(*) AS love_count
+FROM (
+    SELECT * 
+    FROM review
+    WHERE text LIKE '%love%'
+    );
+
+-- For "hate" count:
+SELECT COUNT(*) AS hate_count
+FROM (
+    SELECT * 
+    FROM review
+    WHERE text LIKE '%hate%'
+    );
+
+
+
+10. Find the top 10 users with the most fans:
+
+SQL code used to arrive at answer:
+
+SELECT id, SUM(fans) AS sum_fan_number
+FROM user
+GROUP BY id
+ORDER BY sum_fan_number DESC
+LIMIT 10
+
+Copy and Paste the Result Below:
++------------------------+----------------+
+| id                     | sum_fan_number |
++------------------------+----------------+
+| -9I98YbNQnLdAmcYfb324Q |            503 |
+| -8EnCioUmDygAbsYZmTeRQ |            497 |
+| --2vR0DIsmQ6WfcSzKWigw |            311 |
+| -G7Zkl1wIWBBmD0KRy_sCw |            253 |
+| -0IiMAZI2SsQ7VmyzJjokQ |            173 |
+| -g3XIcCb2b-BD0QBCcq2Sw |            159 |
+| -9bbDysuiWeo2VShFJJtcw |            133 |
+| -FZBTkAZEXoP7CYvRV2ZwQ |            126 |
+| -9da1xk7zgnnfO1uTVYGkA |            124 |
+| -lh59ko3dxChBSZ9U7LfUw |            120 |
++------------------------+----------------+
+
+
+
+Part 2: Inferences and Analysis
+
+1. Pick one city and category of your choice and group the businesses in that city or category by their overall star rating. Compare the businesses with 2-3 stars to the businesses with 4-5 stars and answer the following questions. Include your code.
+
+i. Do the two groups you chose to analyze have a different distribution of hours?
+
+Yes, the group with 2-3 stars has hours 10:00-16:00 & 8:00-22:00  
+while the group with 4-5 stars has hours 8:00-16:30 & 8:00-17:00  
+
+
+ii. Do the two groups you chose to analyze have a different number of reviews?
+
+Yes, more review counts have been included in the group with 4-5 stars      
+
+
+iii. Are you able to infer anything from the location data provided between these two groups? Explain.
+
+Location at 'Tropicana Ave' have recorded less stars than the locations 'Scenic Loop Dr' & 'Reno Ave'
+
+SQL code used for analysis:
+
+-- for the group with 2-3 stars
+SELECT city, category, hours, stars, review_count, address
+FROM business AS b
+JOIN category AS c
+ON b.id = c.business_id
+JOIN hours AS h
+ON b.id = h.business_id
+WHERE city = 'Las Vegas'
+AND category = 'Shopping'
+AND stars IN (2, 2.5, 3, 3.5)
+ORDER BY hours
+
+RESULTS:
++-----------+----------+-----------------------+-------+--------------+-----------------------------+
+| city      | category | hours                 | stars | review_count | address                     |
++-----------+----------+-----------------------+-------+--------------+-----------------------------+
+| Las Vegas | Shopping | Friday|10:00-16:00    |   3.5 |           11 | 3421 E Tropicana Ave, Ste I |
+| Las Vegas | Shopping | Friday|8:00-22:00     |   2.5 |            6 | 3808 E Tropicana Ave        |
+| Las Vegas | Shopping | Monday|10:00-16:00    |   3.5 |           11 | 3421 E Tropicana Ave, Ste I |
+| Las Vegas | Shopping | Monday|8:00-22:00     |   2.5 |            6 | 3808 E Tropicana Ave        |
+| Las Vegas | Shopping | Saturday|10:00-16:00  |   3.5 |           11 | 3421 E Tropicana Ave, Ste I |
+| Las Vegas | Shopping | Saturday|8:00-22:00   |   2.5 |            6 | 3808 E Tropicana Ave        |
+| Las Vegas | Shopping | Sunday|8:00-22:00     |   2.5 |            6 | 3808 E Tropicana Ave        |
+| Las Vegas | Shopping | Thursday|10:00-19:00  |   3.5 |           11 | 3421 E Tropicana Ave, Ste I |
+| Las Vegas | Shopping | Thursday|8:00-22:00   |   2.5 |            6 | 3808 E Tropicana Ave        |
+| Las Vegas | Shopping | Tuesday|10:00-19:00   |   3.5 |           11 | 3421 E Tropicana Ave, Ste I |
+| Las Vegas | Shopping | Tuesday|8:00-22:00    |   2.5 |            6 | 3808 E Tropicana Ave        |
+| Las Vegas | Shopping | Wednesday|10:00-16:00 |   3.5 |           11 | 3421 E Tropicana Ave, Ste I |
+| Las Vegas | Shopping | Wednesday|8:00-22:00  |   2.5 |            6 | 3808 E Tropicana Ave        |
++-----------+----------+-----------------------+-------+--------------+-----------------------------+
+
+-- for the group with 4-5 stars
+SELECT city, category, hours, stars, review_count
+FROM business AS b
+JOIN category AS c
+ON b.id = c.business_id
+JOIN hours AS h
+ON b.id = h.business_id
+WHERE city = 'Las Vegas'
+AND category = 'Shopping'
+AND stars IN (4, 4.5, 5)
+ORDER BY hours
+
+RESULTS:
++-----------+----------+----------------------+-------+--------------+------------------------+
+| city      | category | hours                | stars | review_count | address                |
++-----------+----------+----------------------+-------+--------------+------------------------+
+| Las Vegas | Shopping | Friday|8:00-16:30    |   4.5 |           32 | 1000 Scenic Loop Dr    |
+| Las Vegas | Shopping | Friday|8:00-17:00    |   5.0 |            4 | 3555 W Reno Ave, Ste F |
+| Las Vegas | Shopping | Monday|8:00-16:30    |   4.5 |           32 | 1000 Scenic Loop Dr    |
+| Las Vegas | Shopping | Monday|8:00-17:00    |   5.0 |            4 | 3555 W Reno Ave, Ste F |
+| Las Vegas | Shopping | Saturday|8:00-16:30  |   4.5 |           32 | 1000 Scenic Loop Dr    |
+| Las Vegas | Shopping | Sunday|8:00-16:30    |   4.5 |           32 | 1000 Scenic Loop Dr    |
+| Las Vegas | Shopping | Thursday|8:00-16:30  |   4.5 |           32 | 1000 Scenic Loop Dr    |
+| Las Vegas | Shopping | Thursday|8:00-17:00  |   5.0 |            4 | 3555 W Reno Ave, Ste F |
+| Las Vegas | Shopping | Tuesday|8:00-16:30   |   4.5 |           32 | 1000 Scenic Loop Dr    |
+| Las Vegas | Shopping | Tuesday|8:00-17:00   |   5.0 |            4 | 3555 W Reno Ave, Ste F |
+| Las Vegas | Shopping | Wednesday|8:00-16:30 |   4.5 |           32 | 1000 Scenic Loop Dr    |
+| Las Vegas | Shopping | Wednesday|8:00-17:00 |   5.0 |            4 | 3555 W Reno Ave, Ste F |
++-----------+----------+----------------------+-------+--------------+------------------------+
+
+
+
+2. Group business based on the ones that are open and the ones that are closed. What differences can you find between the ones that are still open and the ones that are closed? List at least two differences and the SQL code you used to arrive at your answer.
+		
+i. Difference 1:
+More open business (8,480) than closed business (1,520) 
+
+         
+ii. Difference 2:
+More average review count (31.8) for open business than closed business' average review count (23.3)
+
+
+SQL code used for analysis:
+
+SELECT 
+    is_open, 
+    COUNT(*), 
+    ROUND(AVG(stars), 1) AS avg_stars, 
+    ROUND(AVG(review_count), 1) AS avg_rvw_cnt, 
+    ROUND(SUM(review_count), 1) AS sum_rvw_cnt
+FROM business
+GROUP BY is_open
+ORDER BY is_open DESC
+
+RESULTS:
++---------+----------+-----------+-------------+-------------+
+| is_open | COUNT(*) | avg_stars | avg_rvw_cnt | sum_rvw_cnt |
++---------+----------+-----------+-------------+-------------+
+|       1 |     8480 |       3.7 |        31.8 |    269300.0 |
+|       0 |     1520 |       3.5 |        23.2 |     35261.0 |
++---------+----------+-----------+-------------+-------------+
+
+
+3. For this last part of your analysis, you are going to choose the type of analysis you want to conduct on the Yelp dataset and are going to prepare the data for analysis.
+
+Ideas for analysis include: Parsing out keywords and business attributes for sentiment analysis, clustering businesses to find commonalities or anomalies between them, predicting the overall star rating for a business, predicting the number of fans a user will have, and so on. These are just a few examples to get you started, so feel free to be creative and come up with your own problem you want to solve. Provide answers, in-line, to all of the following:
+
+i. Indicate the type of analysis you chose to do:
+
+Which kind of businesses are more attractive in terms of stars at 'Phoenix' vs. 'Las Vegas'        
+
+
+ii. Write 1-2 brief paragraphs on the type of data you will need for your analysis and why you chose that data:
+
+I assumed that depend on the location(city), differenct businesses would be started and need to see the catergory of business that has average stars >3 and ,<3 at 'Phoenix' vs. 'Las Vegas'. 
+
+
+iii. Output of your finished dataset:
+
+'Phoenix' business caterogy under stars <3
++---------------+----------+
+| category      | avg_star |
++---------------+----------+
+| Home Cleaning |      1.0 |
+| Grocery       |      2.5 |
+| Burgers       |     2.75 |
+| Fast Food     |     2.75 |
+| Home Services |     2.75 |
++---------------+----------+
+'Phoenix' business caterogy under stars >3
++------------------------+--------------------+
+| category               |           avg_star |
++------------------------+--------------------+
+| American (New)         |                3.5 |
+| Bars                   |                3.5 |
+| Contractors            |                3.5 |
+| Financial Services     |                3.5 |
+| Hotels & Travel        |                3.5 |
+| Insurance              |                3.5 |
+| Nightlife              |                3.5 |
+| Professional Services  |                3.5 |
+| Restaurant Supplies    |                3.5 |
+| Restaurants            |                3.5 |
+| Travel Services        |                3.5 |
+| Wholesale Stores       |                3.5 |
+| Wholesalers            |                3.5 |
+| Food                   |              3.625 |
+| American (Traditional) | 3.8333333333333335 |
+| Barbeque               |                4.0 |
+| Breakfast & Brunch     |                4.0 |
+| Fences & Gates         |                4.0 |
+| Hair Salons            |                4.0 |
+| Shopping               |                4.0 |
+| Smokehouse             |                4.0 |
+| Health & Medical       |  4.333333333333333 |
+| Beauty & Spas          |                4.5 |
+| Home & Garden          |                4.5 |
+| Nurseries & Gardening  |                4.5 |
++------------------------+--------------------+
+
+
+'Las Vegas' business caterogy under stars <3
++-------------------------------+----------+
+| category                      | avg_star |
++-------------------------------+----------+
+| Convenience Stores            |      2.5 |
+| Cosmetics & Beauty Supply     |      2.5 |
+| Drugstores                    |      2.5 |
+| Photography Stores & Services |      2.5 |
++-------------------------------+----------+
+'Las Vegas' business caterogy under stars >3
++---------------------------+----------+
+| category                  | avg_star |
++---------------------------+----------+
+| Food                      |     3.25 |
+| American (New)            |      3.5 |
+| Arcades                   |      3.5 |
+| Arts & Entertainment      |      3.5 |
+| Bars                      |      3.5 |
+| Event Planning & Services |      3.5 |
+| Hotels                    |      3.5 |
+| Knitting Supplies         |      3.5 |
+| Nightlife                 |      3.5 |
+| Resorts                   |      3.5 |
+| Vacation Rentals          |      3.5 |
+| Beauty & Spas             |     3.75 |
+| Restaurants               |    3.875 |
+| Shopping                  |    3.875 |
+| Apartments                |      4.0 |
+| Asian Fusion              |      4.0 |
+| Bakeries                  |      4.0 |
+| Breakfast & Brunch        |      4.0 |
+| Chinese                   |      4.0 |
+| Chocolatiers & Shops      |      4.0 |
+| Dentists                  |      4.0 |
+| Desserts                  |      4.0 |
+| French                    |      4.0 |
+| Gluten-Free               |      4.0 |
+| Hotels & Travel           |      4.0 |
++---------------------------+----------+
+
+         
+iv. Provide the SQL code you used to create your final dataset:
+
+
+--'Phoenix' business caterogy under stars <3
+SELECT *
+FROM (
+    SELECT c.category, AVG(b.stars) AS avg_star
+    FROM business AS b
+    JOIN category AS c
+    ON b.id = c.business_id
+    WHERE city = 'Phoenix'
+    GROUP BY c.category
+    ORDER BY avg_star, category ASC
+)
+WHERE avg_star <3
+
+--'Phoenix' business caterogy under stars >3
+SELECT *
+FROM (
+    SELECT c.category, AVG(b.stars) AS avg_star
+    FROM business AS b
+    JOIN category AS c
+    ON b.id = c.business_id
+    WHERE city = 'Phoenix'
+    GROUP BY c.category
+    ORDER BY avg_star, category ASC
+)
+WHERE avg_star >3
+
+--'Las Vegas' business caterogy under stars <3
+SELECT *
+FROM (
+    SELECT c.category, AVG(b.stars) AS avg_star
+    FROM business AS b
+    JOIN category AS c
+    ON b.id = c.business_id
+    WHERE city = 'Las Vegas'
+    GROUP BY c.category
+    ORDER BY avg_star, category ASC
+)
+WHERE avg_star <3
+
+--'Las Vegas' business caterogy under stars >3
+SELECT *
+FROM (
+    SELECT c.category, AVG(b.stars) AS avg_star
+    FROM business AS b
+    JOIN category AS c
+    ON b.id = c.business_id
+    WHERE city = 'Las Vegas'
+    GROUP BY c.category
+    ORDER BY avg_star, category ASC
+)
+WHERE avg_star >3
