@@ -8,4 +8,5 @@
 - 🗂️ Portfolio: Personal portfolio
 - 🗂️ quest_****: Aiffel quests
 - 🗂️ SHAP: Study for SHAP
+- 🗂️ Signal_Noise: Study for FinanceDataReader
 - 🗂️ Statistics: Study for statistics with python 
