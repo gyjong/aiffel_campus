@@ -1,4 +1,5 @@
-# Repository for AIFFEL Data Scientist Campus
+## Repository for AIFFEL Data Scientist Campus
+> From 2024 Jan
 
 🚀 This is Kenny Jung's Repository and will record the activities during aiffel data scientist course.
 
