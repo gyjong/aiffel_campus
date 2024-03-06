@@ -1,8 +1,8 @@
 # AIFFEL Data Scientist Campus Code Peer Review Templete
 
-코더 : [코드 작성자]
+코더 : 정광용
 
-리뷰어 : [리뷰어]
+리뷰어 : 함경표
 
 ---
 
