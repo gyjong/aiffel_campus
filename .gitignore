@@ -1,3 +1,4 @@
 .DS_Store
 *.swp
-.h5
+*.h5
+*.env
